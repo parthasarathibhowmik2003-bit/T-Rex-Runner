@@ -1,0 +1,129 @@
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --canvas-bg: transparent;
+    --primary-color: #e0e0e0;
+    transition: background-color 1s, color 1s;
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling, especially on mobile */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    touch-action: none; /* Crucial for swipe controls without scrolling */
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks pass through to canvas, except for buttons */
+}
+
+#score-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    user-select: none;
+    letter-spacing: 2px;
+}
+
+.screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
+    pointer-events: auto;
+    /* background color is mapped to RGB for alpha channel support */
+    background: rgba(247, 247, 247, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+
+
+.screen.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+button {
+    background: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 15px;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.icon-btn {
+    position: absolute;
+    top: 20px;
+    pointer-events: auto;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 24px;
+    padding: 5px;
+    box-shadow: none;
+}
+.icon-btn:hover { background: transparent; opacity: 0.6; }
+
+#btn-pause { left: 20px; }
+#btn-sound { left: 60px; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Mobile hinting */
+.desktop-hint { display: block; }
+.mobile-hint { display: none; }
+
+@media (max-width: 768px) {
+    .desktop-hint { display: none; }
+    .mobile-hint { display: block; }
+    #score-display { font-size: 18px; top: 15px; right: 15px; }
+}
